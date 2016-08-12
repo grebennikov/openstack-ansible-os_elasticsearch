@@ -1,19 +1,24 @@
 ---
-
-allow_duplicates: yes
-
 galaxy_info:
-  author: Donovan Francesco, Paul Stevens
-  description: Elasticsearch for ECS
-  company: "Internet Solutions"
-  license: "license (Apache)"
-  # Require 1.6 for apt deb install
+  author: OpenStack-Ansible
+  description: Deploy Elasticsearch with OpenStack Ansible
+  company: OpenStack
+  license: Apache-2.0
   min_ansible_version: 1.9
+  version: 0.1.0
   platforms:
   - name: Ubuntu
     versions:
-    - all
-  categories:
-    - system
+    - trusty
+    - xenial
+  galaxy_tags:
+   - cloud
+   - openstack
+   - python
+   - elasticsearch
 
-dependencies: []
+dependencies:
+  - pip_install
+  - role: apt_package_pinning
+    when:
+      - ansible_pkg_mgr == 'apt'
