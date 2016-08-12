@@ -24,7 +24,7 @@ network.host: _non_loopback:ipv4_
 http.port: {{ elasticsearch_service_port }}
 discovery.zen.ping.multicast.enabled: false
 {% set hosts = '' %}
-{% for host in groups[elasticsearch_all['group']] %}
+{% for host in groups['elasticsearch_all'] %}
 {% if loop.last %}
 {% set hosts = hosts + host + ',' %}
 discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
