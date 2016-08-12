@@ -39,7 +39,7 @@
 
 - name: Add Java external repository
   apt_repository:
-    repo: {{ name }}
+    repo: {{ item }}
   register: add_java_repo
   until: add_java_repo | success
   retries: 5
