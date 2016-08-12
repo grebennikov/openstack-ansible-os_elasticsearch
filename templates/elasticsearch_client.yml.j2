@@ -26,7 +26,7 @@ discovery.zen.ping.multicast.enabled: false
 {% set hosts = '' %}
 {% for host in groups['elasticsearch_all'] %}
 {% if loop.last %}
-{% set hosts = hosts + host + ',' %}
+{% set hosts = "hosts" + host + ',' %}
 discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
 {% else %}
 {% set hosts = hosts + host + ','  %}

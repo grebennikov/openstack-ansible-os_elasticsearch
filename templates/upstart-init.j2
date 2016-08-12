@@ -12,15 +12,20 @@ respawn limit 10 5
 chdir "{{ service_home }}"
 
 # Pre start actions
+
+setuid {{ elasticsearch_system_user_name }}
+setgid {{ elasticsearch_system_group_name }}
+
+limit nofile {{ elasticsearch_max_open_files }} {{ elasticsearch_max_open_files }}
+
 pre-start script
-  set -a
-  . /etc/default/{{ elasticsearch_program_name }}
+  [ -r /etc/default/{{ elasticsearch_program_name }} ] && . /etc/default/{{ elasticsearch_program_name }}
   mkdir -p {{ elasticsearch_pid_directory }}
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} {{ elasticsearch_pid_directory }}
 
   mkdir -p "/var/lock/{{ elasticsearch_program_name }}"
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} "/var/lock/{{ elasticsearch_program_name }}"
-  ulimit -n {{ elasticsearch_max_open_files }}
+
 end script
 post-stop script
   rm "{{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid"
