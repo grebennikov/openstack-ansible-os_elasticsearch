@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: OpenStack-Ansible
+  author: Donovan Francesco <donovan.francesco@is.co.za>
   description: Deploy Elasticsearch with OpenStack Ansible
   company: OpenStack
   license: Apache-2.0
@@ -17,8 +17,4 @@ galaxy_info:
    - python
    - elasticsearch
 
-dependencies:
-  - pip_install
-  - role: apt_package_pinning
-    when:
-      - ansible_pkg_mgr == 'apt'
+dependencies: []
