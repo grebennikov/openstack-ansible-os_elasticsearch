@@ -1,0 +1,85 @@
+---
+# Copyright 2016 Internet Solutions (Pty) Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
+# (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+- name: Add Elasticsearch repository key
+  apt_key:
+    url: "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
+    state: "present"
+  register: fetch_elasticsearch_repo_key
+  until: fetch_es_repo_key | success
+  retries: 5
+  delay: 2
+  tags:
+    - elasticsearch-apt-sources
+
+- name: Add Elasticsearch repository
+  apt_repository:
+    repo: "deb http://packages.elastic.co/elasticsearch/{{ elasticsearch_major_version }}/debian stable main"
+    state: "present"
+  register: add_elasticsearch_repo
+  until: add_elasticsearch_repo | success
+  retries: 5
+  delay: 2
+  tags:
+    - elasticsearch-apt-sources
+
+- name: Add Java external repository
+  apt_repository:
+    repo: {{ name }}
+  register: add_java_repo
+  until: add_java_repo | success
+  retries: 5
+  delay: 2
+  with_items:
+    - "ppa:webupd8team/java"
+
+- name: Auto license Java
+  debconf:
+    name: 'oracle-java8-installer'
+    question: 'shared/accepted-oracle-license-v1-1'
+    value: 'true'
+    vtype: 'select'
+  register: license_java
+  until: license_java | success
+  retries: 3
+  delay: 2
+
+- name: Check apt last update file
+  stat:
+    path: /var/cache/apt
+  register: apt_cache_stat
+  tags:
+    - elasticsearch-apt-sources
+
+- name: Update apt if needed
+  apt:
+    update_cache: yes
+  when: "ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > {{cache_timeout}}"
+  tags:
+    - elasticsearch-apt-sources
+
+- name: Install apt packages for elasticsearch
+  apt:
+    pkg: "{{ item }}"
+    state: "{{ elasticsearch_package_state }}"
+  register: install_elasticsearch_apt_packages
+  until: install_elasticsearch_apt_packages |success
+  retries: 5
+  delay: 2
+  with_items: "{{ elasticsearch_apt_packages }}"
+  tags:
+    - elasticsearch-apt-packages

@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+D /var/lock/{{ elasticsearch_program_name }} 2755 {{ elasticsearch_system_user_name }} {{ elasticsearch_system_group_name }}
+D /var/run/{{ elasticsearch_program_name }} 2755 {{ elasticsearch_system_user_name }} {{ elasticsearch_system_group_name }}

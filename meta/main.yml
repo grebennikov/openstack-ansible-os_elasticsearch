@@ -1,0 +1,19 @@
+---
+
+allow_duplicates: yes
+
+galaxy_info:
+  author: Donovan Francesco, Paul Stevens
+  description: Elasticsearch for ECS
+  company: "Internet Solutions"
+  license: "license (Apache)"
+  # Require 1.6 for apt deb install
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+    - system
+
+dependencies: []

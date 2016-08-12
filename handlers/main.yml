@@ -1,0 +1,8 @@
+---
+# handlers file for openstack-ansible-elasticsearch
+- name: Restart elasticsearch services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - "{{ elasticsearch_program_name }}"

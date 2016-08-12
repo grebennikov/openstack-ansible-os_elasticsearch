@@ -1,0 +1,39 @@
+# {{ ansible_managed }}
+description "ElasticSearch Service"
+author "Donovan Francesco <donovan.francesco@is.co.za>"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+respawn
+respawn limit 10 5
+
+# Change directory to service users home
+chdir "{{ service_home }}"
+
+# Pre start actions
+pre-start script
+  mkdir -p {{ elasticsearch_pid_directory }}
+  chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} {{ elasticsearch_pid_directory }}
+
+  mkdir -p "/var/lock/{{ elasticsearch_program_name }}"
+  chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} "/var/lock/{{ elasticsearch_program_name }}"
+  ulimit -n {{ elasticsearch_max_open_files }}
+  sysctl -w vm.max_map_count=262144
+end script
+script
+  set -a
+  . /etc/default/{{ elasticsearch_program_name }}
+end script
+# Post stop actions
+post-stop script
+  rm "{{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid"
+end script
+
+# Run the start up job
+exec start-stop-daemon --start \
+                       --chuid {{ elasticsearch_system_user_name }} \
+                       --make-pidfile \
+                       --pidfile {{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid \
+                       --exec {{ elasticsearch_system_user_home }}/bin/{{ elasticsearch_program_name }} \
+                       --log-file={{ elasticsearch_log_directory}}/{{ elasticsearch_program_name }}.log

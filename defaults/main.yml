@@ -1,0 +1,50 @@
+---
+# Copyright 2016 Internet Solutions (Pty) Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
+# (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+#
+#
+# Originally obtained from https://github.com/elastic/ansible-elasticsearch
+#
+elasticsearch_package_state: "latest"
+elasticsearch_major_version: "2.x"
+
+elasticsearch_program_name: elasticsearch
+elasticsearch_system_group_name: elasticsearch
+elasticsearch_system_user_name: elasticsearch
+elasticsearch_system_user_comment: Elasticsearch System User
+elasticsearch_system_user_shell: /bin/false
+elasticsearch_system_user_home: "/var/lib/{{ elasticsearch_system_user_name }}"
+elasticsearch_java_home: /usr/lib/jvm/java-8-oracle
+elasticsearch_data_directory: "/var/lib/{{ elasticsearch_system_user_name }}/data"
+elasticsearch_log_directory: /var/log/elasticsearch
+elasticsearch_etc_directory: /etc/elasticsearch
+elasticsearch_plugin_directory: /usr/share/elasticsearch/plugins
+elasticsearch_pid_directory: /var/run/elasticsearch
+elasticsearch_work_directory: /tmp/elasticsearch
+elasticsearch_heap_size: 2g
+elasticsearch_max_open_files: 65536
+elasticsearch_restart_on_upgrade: false
+elasticsearch_version_lock: false
+elasticsearch_restart_on_change: true
+elasticsearch_plugins_reinstall: false
+elasticsearch_scripts: false
+elasticsearch_templates: false
+elasticsearch_config: {}
+
+elasticsearch_pip_packages:
+  - elasticsearch
+  - elasticsearch-curator
