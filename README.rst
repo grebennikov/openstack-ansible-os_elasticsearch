@@ -4,10 +4,6 @@ OpenStack-Ansible Elasticsearch
 Ansible role that installs and configures OpenStack elasticsearch. elasticsearch is
 installed behind the Apache webserver listening on port 9200 by default.
 
-.. literalinclude:: ../../defaults/main.yml
-   :language: yaml
-   :start-after: under the License.
-
 Required Variables
 ==================
 
