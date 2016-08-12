@@ -1,0 +1,8 @@
+ - service:
+      haproxy_service_name: elasticsearch
+      haproxy_backend_nodes: "{{ groups['elasticsearch_all'] | default([]) }}"
+      haproxy_ssl: "{{ haproxy_ssl }}"
+      haproxy_port: 9200
+      haproxy_balance_type: http
+      haproxy_backend_options:
+        - "httpchk HEAD /"
