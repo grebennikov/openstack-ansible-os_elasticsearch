@@ -21,9 +21,7 @@ pre-start script
   mkdir -p "/var/lock/{{ elasticsearch_program_name }}"
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} "/var/lock/{{ elasticsearch_program_name }}"
   ulimit -n {{ elasticsearch_max_open_files }}
-  sysctl -w vm.max_map_count=262144
 end script
-# Post stop actions
 post-stop script
   rm "{{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid"
 end script
@@ -33,5 +31,4 @@ exec start-stop-daemon --start \
                        --chuid {{ elasticsearch_system_user_name }} \
                        --make-pidfile \
                        --pidfile {{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid \
-                       --exec {{ elasticsearch_bin }} \
-                       --log-file={{ elasticsearch_log_directory}}/{{ elasticsearch_program_name }}.log
+                       --exec {{ elasticsearch_bin }}
