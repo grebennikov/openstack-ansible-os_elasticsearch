@@ -15,14 +15,37 @@
 #
 # (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
-- name: Copy Configuration File
+- name: Copy Client Node Configuration File
   template:
-    src: elasticsearch.yml.j2
+    src: elasticsearch_client.yml.j2
     dest: {{ elasticsearch_etc_directory }}/elasticsearch.yml
-    owner: {{ es_user }}
-    group: {{ es_group }}
+    owner: {{ elasticsearch_system_user_name }}
+    group: {{ elasticsearch_system_group_name }}
     mode: 0644
     force: yes
+  when: inventory_hostname in groups['elasticsearch_client']
+  notify: Restart elasticsearch services
+
+- name: Copy Master Node Configuration File
+  template:
+    src: elasticsearch_master.yml.j2
+    dest: {{ elasticsearch_etc_directory }}/elasticsearch.yml
+    owner: {{ elasticsearch_system_user_name }}
+    group: {{ elasticsearch_system_group_name }}
+    mode: 0644
+    force: yes
+  when: inventory_hostname in groups['elasticsearch_master']
+  notify: Restart elasticsearch services
+
+- name: Copy Data Node Configuration File
+  template:
+    src: elasticsearch_master.yml.j2
+    dest: {{ elasticsearch_etc_directory }}/elasticsearch.yml
+    owner: {{ elasticsearch_system_user_name }}
+    group: {{ elasticsearch_system_group_name }}
+    mode: 0644
+    force: yes
+  when: inventory_hostname in groups['elasticsearch_data']
   notify: Restart elasticsearch services
 
 - name: Copy /etc/default/ File for Instance

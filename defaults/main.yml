@@ -21,7 +21,8 @@
 #
 elasticsearch_package_state: "latest"
 elasticsearch_major_version: "2.x"
-
+elasticsearch_cluster_name: "ECS-LAB"
+elasticsearch_service_port: 9200
 elasticsearch_program_name: elasticsearch
 elasticsearch_system_group_name: elasticsearch
 elasticsearch_system_user_name: elasticsearch
@@ -38,12 +39,13 @@ elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g
 elasticsearch_max_open_files: 65536
 elasticsearch_restart_on_upgrade: false
-elasticsearch_version_lock: false
-elasticsearch_restart_on_change: true
-elasticsearch_plugins_reinstall: false
-elasticsearch_scripts: false
-elasticsearch_templates: false
-elasticsearch_config: {}
+
+# Set the number of shards (splits) of an index (5 by default):
+elasticsearch_index_shards: 5
+# Set the number of replicas (additional copies) of an index (1 by default):
+elasticsearch_index_replicas: 1
+
+elasticsearch_discovery_minimum_master_nodes: 3
 
 elasticsearch_pip_packages:
   - elasticsearch

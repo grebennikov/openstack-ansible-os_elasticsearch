@@ -17,16 +17,36 @@
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
 
 component_skel:
-  elasticsearch:
+  elasticsearch_master:
+    belongs_to:
+      - elasticsearch_all
+  elasticsearch_data:
+    belongs_to:
+      - elasticsearch_all
+  elasticsearch_client:
     belongs_to:
       - elasticsearch_all
 
 container_skel:
-  elasticsearch_container:
+  elasticsearch_master_container:
     belongs_to:
       - elasticsearch-infra_containers
     contains:
-      - elasticsearch
+      - elasticsearch_master
+    properties:
+      service_name: elasticsearch
+  elasticsearch_data_container:
+    belongs_to:
+      - elasticsearch-infra_containers
+    contains:
+      - elasticsearch_data
+    properties:
+      service_name: elasticsearch
+  elasticsearch_client_container:
+    belongs_to:
+      - elasticsearch-infra_containers
+    contains:
+      - elasticsearch_client
     properties:
       service_name: elasticsearch
 

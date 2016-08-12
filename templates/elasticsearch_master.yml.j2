@@ -1,0 +1,51 @@
+# Copyright 2016 Internet Solutions (Pty) Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
+# (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+
+cluster.name: {{ elasticsearch_cluster_name }}
+node.name: {{ inventory_hostname }}
+node.client: false
+node.data: false
+node.master: true
+bootstrap.mlockall: true
+network.host: _non_loopback:ipv4_
+http.port: {{ elasticsearch_service_port }}
+discovery.zen.ping.multicast.enabled: false
+{% set hosts = '' %}
+{% for host in groups[elasticsearch_all['group']] %}
+{% if loop.last %}
+{% set hosts = hosts + host + ',' %}
+discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
+{% else %}
+{% set hosts = hosts + host + ','  %}
+{% endif %}
+{% endfor %}
+{% if elasticsearch_discovery_minimum_master_nodes is defined and elasticsearch_discovery_minimum_master_nodes %}
+discovery.zen.minimum_master_nodes: {{ elasticsearch_discovery_minimum_master_nodes }}
+{% endif %}
+gateway.recover_after_nodes: 3
+index.number_of_shards: {{ elasticsearch_index_shards }}
+index.number_of_replicas: {{ elasticsearch_index_replicas }}
+# Path to directory containing configuration (this file and logging.yml):
+path.conf: {{ elasticsearch_etc_directory }}
+
+path.data: {{ elasticsearch_data_directory }}
+
+path.work: {{ elasticsearch_work_directory }}
+
+path.logs: {{ elasticsearch_log_directory }}
+
+path.plugins: {{ elasticsearch_plugin_directory }}
