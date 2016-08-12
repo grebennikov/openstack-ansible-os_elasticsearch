@@ -20,7 +20,7 @@
     url: "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
     state: "present"
   register: fetch_elasticsearch_repo_key
-  until: fetch_es_repo_key | success
+  until: fetch_elasticsearch_repo_key | success
   retries: 5
   delay: 2
   tags:
