@@ -15,6 +15,13 @@
 #
 # (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+- name: Templatize /etc/hosts
+  template:
+    src: elasticsearch_hosts_file.j2
+    dest: /etc/hosts
+    mode: 0644
+  register: os_elasticsearch_config_hosts
+
 - name: Copy Client Node Configuration File
   template:
     src: elasticsearch_client.yml.j2
