@@ -63,7 +63,7 @@ ES_GROUP={{elasticsearch_system_group_name}}
 # Specifies the maximum file descriptor number that can be opened by this process
 # When using Systemd, this setting is ignored and the LimitNOFILE defined in
 # /usr/lib/systemd/system/elasticsearch.service takes precedence
-{% if es_max_open_files is defined %}
+{% if elasticsearch_max_open_files is defined %}
 #MAX_OPEN_FILES
 MAX_OPEN_FILES={{elasticsearch_max_open_files}}
 {% endif %}
@@ -73,7 +73,7 @@ MAX_OPEN_FILES={{elasticsearch_max_open_files}}
 # in elasticsearch.yml (ES_HEAP_SIZE  must also be set).
 # When using Systemd, the LimitMEMLOCK property must be set
 # in /usr/lib/systemd/system/elasticsearch.service
-{% if m_lock_enabled %}
+{% if elasticsearch_m_lock_enabled is defined %}
 #MAX_LOCKED_MEMORY=
 MAX_LOCKED_MEMORY=unlimited
 {% endif %}

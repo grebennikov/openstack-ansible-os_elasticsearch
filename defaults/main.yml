@@ -39,7 +39,7 @@ elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g
 elasticsearch_max_open_files: 65536
 elasticsearch_restart_on_upgrade: false
-
+elasticsearch_m_lock_enabled: true
 # Set the number of shards (splits) of an index (5 by default):
 elasticsearch_index_shards: 5
 # Set the number of replicas (additional copies) of an index (1 by default):
