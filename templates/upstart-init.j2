@@ -13,6 +13,8 @@ chdir "{{ service_home }}"
 
 # Pre start actions
 pre-start script
+  set -a
+  . /etc/default/{{ elasticsearch_program_name }}
   mkdir -p {{ elasticsearch_pid_directory }}
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} {{ elasticsearch_pid_directory }}
 
@@ -20,10 +22,6 @@ pre-start script
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} "/var/lock/{{ elasticsearch_program_name }}"
   ulimit -n {{ elasticsearch_max_open_files }}
   sysctl -w vm.max_map_count=262144
-end script
-script
-  set -a
-  . /etc/default/{{ elasticsearch_program_name }}
 end script
 # Post stop actions
 post-stop script
