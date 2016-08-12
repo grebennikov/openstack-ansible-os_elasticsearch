@@ -34,6 +34,7 @@ elasticsearch_data_directory: "/var/lib/{{ elasticsearch_system_user_name }}/dat
 elasticsearch_log_directory: /var/log/elasticsearch
 elasticsearch_etc_directory: /etc/elasticsearch
 elasticsearch_plugin_directory: /usr/share/elasticsearch/plugins
+elasticsearch_bin: /usr/share/elasticsearch/bin/elasticsearch
 elasticsearch_pid_directory: /var/run/elasticsearch
 elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g

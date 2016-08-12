@@ -35,5 +35,5 @@ exec start-stop-daemon --start \
                        --chuid {{ elasticsearch_system_user_name }} \
                        --make-pidfile \
                        --pidfile {{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid \
-                       --exec {{ elasticsearch_system_user_home }}/bin/{{ elasticsearch_program_name }} \
+                       --exec {{ elasticsearch_bin }} \
                        --log-file={{ elasticsearch_log_directory}}/{{ elasticsearch_program_name }}.log
