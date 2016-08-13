@@ -22,6 +22,7 @@ node.data: false
 node.master: true
 bootstrap.mlockall: true
 network.bind_host: {{ ansible_eth1['ipv4']['address'] }}
+network.publish_host: {{ ansible_eth1['ipv4']['address'] }}
 http.port: {{ elasticsearch_service_port }}
 discovery.zen.ping.multicast.enabled: false
 {% if elasticsearch_discovery_minimum_master_nodes is defined and elasticsearch_discovery_minimum_master_nodes %}
@@ -31,7 +32,7 @@ discovery.zen.minimum_master_nodes: {{ elasticsearch_discovery_minimum_master_no
 {% for host in groups['elasticsearch_all'] %}
 {%- if loop.last %}
 {% set hosts = hosts + host %}
-discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
+discovery.zen.ping.unicast.hosts: [{{ hosts }}]
 {% else %}
 {% set hosts = hosts + host + ',' %}
 {% endif %}
