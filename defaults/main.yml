@@ -15,10 +15,6 @@
 #
 # (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
-#
-#
-# Originally obtained from https://github.com/elastic/ansible-elasticsearch
-#
 elasticsearch_package_state: "latest"
 elasticsearch_major_version: "2.x"
 elasticsearch_cluster_name: "ECS-LAB"
