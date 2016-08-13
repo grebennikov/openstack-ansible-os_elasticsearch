@@ -32,10 +32,9 @@ elasticsearch_system_user_home: "/var/lib/{{ elasticsearch_system_user_name }}"
 elasticsearch_java_home: /usr/lib/jvm/java-8-oracle
 elasticsearch_data_directory: "/var/lib/{{ elasticsearch_system_user_name }}/data"
 elasticsearch_log_directory: /var/log/elasticsearch
-elasticsearch_etc_directory: /etc/elasticsearch
+elasticsearch_etc_directory: /usr/share/elasticsearch/config
 elasticsearch_plugin_directory: /usr/share/elasticsearch/plugins
 elasticsearch_bin: /usr/share/elasticsearch/bin/elasticsearch
-elasticsearch_service_directory: /usr/share/elasticsearch
 elasticsearch_pid_directory: /var/run/elasticsearch
 elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g
