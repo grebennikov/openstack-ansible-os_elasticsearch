@@ -9,7 +9,7 @@ respawn
 respawn limit 10 5
 
 # Change directory to service users home
-chdir "{{ service_home }}"
+chdir "{{ elasticsearch_system_user_home }}"
 
 # Pre start actions
 
