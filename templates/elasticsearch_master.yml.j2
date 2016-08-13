@@ -21,31 +21,26 @@ node.client: false
 node.data: false
 node.master: true
 bootstrap.mlockall: true
-network.host: _non_loopback:ipv4_
+network.bind_host: {{ ansible_eth1['ipv4']['address'] }}
 http.port: {{ elasticsearch_service_port }}
 discovery.zen.ping.multicast.enabled: false
-{% set hosts = '' %}
-{% for host in groups['elasticsearch_all'] %}
-{% if loop.last %}
-{% set hosts = "hosts" + host + ',' %}
-discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
-{% else %}
-{% set hosts = hosts + host + ','  %}
-{% endif %}
-{% endfor %}
 {% if elasticsearch_discovery_minimum_master_nodes is defined and elasticsearch_discovery_minimum_master_nodes %}
 discovery.zen.minimum_master_nodes: {{ elasticsearch_discovery_minimum_master_nodes }}
 {% endif %}
+{% set hosts = '' %}
+{% for host in groups['elasticsearch_all'] %}
+{%- if loop.last %}
+{% set hosts = hosts + host %}
+discovery.zen.ping.unicast.hosts: ["{{ hosts }}"]
+{% else %}
+{% set hosts = hosts + host + ',' %}
+{% endif %}
+{% endfor %}
 gateway.recover_after_nodes: 3
 index.number_of_shards: {{ elasticsearch_index_shards }}
 index.number_of_replicas: {{ elasticsearch_index_replicas }}
-# Path to directory containing configuration (this file and logging.yml):
 path.conf: {{ elasticsearch_etc_directory }}
-
 path.data: {{ elasticsearch_data_directory }}
-
 path.work: {{ elasticsearch_work_directory }}
-
 path.logs: {{ elasticsearch_log_directory }}
-
 path.plugins: {{ elasticsearch_plugin_directory }}
