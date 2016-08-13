@@ -42,6 +42,7 @@ container_skel:
       - elasticsearch_data
     properties:
       service_name: elasticsearch
+      container_fs_size: 20G
   elasticsearch_client_container:
     belongs_to:
       - elasticsearch-infra_containers
