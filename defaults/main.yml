@@ -85,4 +85,5 @@ elasticsearch_pip_packages:
 #        bucket: <the bucket created in s3>
 
 # A list of plugins to install or delete.
-elasticsearch_plugins: []
+elasticsearch_plugins:
+  - name: 'mobz/elasticsearch-head'

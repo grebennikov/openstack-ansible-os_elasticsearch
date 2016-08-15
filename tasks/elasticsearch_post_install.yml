@@ -38,7 +38,7 @@
     force: yes
   notify: Restart elasticsearch services
 
-- name: Copy /etc/default/ File for Instance
+- name: Copy /etc/default/elasticsearch File for Instance
   template:
     src: elasticsearch_etc_default.j2
     dest: "/etc/default/{{ elasticsearch_program_name }}"
