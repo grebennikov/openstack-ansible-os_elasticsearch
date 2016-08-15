@@ -27,6 +27,10 @@ JAVA_HOME={{ elasticsearch_java_home }}
 ES_HEAP_SIZE={{elasticsearch_heap_size}}
 {% endif %}
 
+{% if elasticsearch_max_mem_size is defined %}
+ES_MAX_MEM={{elasticsearch_max_mem_size}}
+{% endif %}
+
 # Heap new generation
 #ES_HEAP_NEWSIZE=
 

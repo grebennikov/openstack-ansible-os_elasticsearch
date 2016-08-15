@@ -34,6 +34,7 @@ elasticsearch_bin: /usr/share/elasticsearch/bin/elasticsearch
 elasticsearch_pid_directory: /var/run/elasticsearch
 elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g
+elasticsearch_max_mem_size: 2g
 elasticsearch_max_open_files: 65536
 elasticsearch_restart_on_upgrade: false
 elasticsearch_m_lock_enabled: true
