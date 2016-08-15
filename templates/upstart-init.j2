@@ -2,7 +2,10 @@
 description "ElasticSearch Service"
 author "Donovan Francesco <donovan.francesco@is.co.za>"
 
-start on runlevel [2345]
+start on (net-device-up
+          and local-filesystems
+          and runlevel [2345])
+
 stop on runlevel [016]
 
 respawn
@@ -19,7 +22,6 @@ setgid {{ elasticsearch_system_group_name }}
 limit nofile {{ elasticsearch_max_open_files }} {{ elasticsearch_max_open_files }}
 
 pre-start script
-  [ -r /etc/default/{{ elasticsearch_program_name }} ] && . /etc/default/{{ elasticsearch_program_name }}
   mkdir -p {{ elasticsearch_pid_directory }}
   chown {{ elasticsearch_system_user_name }}:{{ elasticsearch_system_group_name }} {{ elasticsearch_pid_directory }}
 
@@ -30,10 +32,15 @@ end script
 post-stop script
   rm "{{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid"
 end script
-
+script
+set -a 
+if [ -f /etc/default/{{ elasticsearch_program_name }} ]; then
+    . /etc/default/{{ elasticsearch_program_name }}
+fi
 # Run the start up job
 exec start-stop-daemon --start \
                        --chuid {{ elasticsearch_system_user_name }} \
                        --make-pidfile \
                        --pidfile {{ elasticsearch_pid_directory}}/{{ elasticsearch_program_name }}.pid \
                        --exec {{ elasticsearch_bin }}
+end script
