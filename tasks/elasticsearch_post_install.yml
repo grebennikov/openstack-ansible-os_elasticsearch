@@ -76,6 +76,7 @@
         not item.name.split('/')[1] in elasticsearch_register_installed_plugins.stdout
   with_items: elasticsearch_plugins
   notify: Restart elasticsearch services
+  ignore_errors: true
 
 - name: Install plugins by url
   shell: bin/plugin install {{ item.name }} -u {{ item.url }}
@@ -105,4 +106,4 @@
     job: "/usr/local/bin/curator --host {{ hostvars[inventory_hostname]['container_address'] }} delete indices --older-than {{ elasticsearch_prune_days }} --time-unit 'days' --timestring '%Y.%m.%d' --prefix 'logstash'"
     cron_file: "elasticsearch_curator"
   tags:
-- elasticsearch-post-install
+    - elasticsearch-post-install
