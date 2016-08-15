@@ -15,20 +15,19 @@
 #
 # (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
-- include: elasticsearch_init_common.yml
-  vars:
-    program_name: "{{ elasticsearch_api_program_name }}"
-    service_name: "{{ elasticsearch_service_name }}"
-    system_user: "{{ elasticsearch_system_user_name }}"
-    system_group: "{{ elasticsearch_system_group_name }}"
-    service_home: "{{ elasticsearch_system_user_home }}"
-    log_directory: "{{ elasticsearch_log_directory }}"
+- include: elasticsearch_init_upstart.yml
+  when: pid1_name == "init"
+  tags:
+    - elasticsearch-init
 
-- include: elasticsearch_init_common.yml
-  vars:
-    program_name: "{{ elasticsearch_conductor_program_name }}"
-    service_name: "{{ elasticsearch_service_name }}"
-    system_user: "{{ elasticsearch_system_user_name }}"
-    system_group: "{{ elasticsearch_system_group_name }}"
-    service_home: "{{ elasticsearch_system_user_home }}"
-    log_directory: "{{ elasticsearch_log_directory }}"
+- include: elasticsearch_init_systemd.yml
+  when: pid1_name == "systemd"
+  tags:
+    - elasticsearch-init
+
+- name: Load service
+  service:
+   name: "{{ elasticsearch_program_name }}"
+   enabled: "yes"
+  notify:
+    - Restart elasticsearch services
