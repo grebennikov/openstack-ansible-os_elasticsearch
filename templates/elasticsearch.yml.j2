@@ -17,9 +17,19 @@
 
 cluster.name: {{ elasticsearch_cluster_name }}
 node.name: {{ inventory_hostname }}
+{% if inventory_hostname in groups['elasticsearch_client'] %}
 node.client: true
 node.data: false
 node.master: false
+{% if inventory_hostname in groups['elasticsearch_data'] %}
+node.client: false
+node.data: true
+node.master: false
+{% if inventory_hostname in groups['elasticsearch_master'] %}
+node.client: false
+node.data: false
+node.master: true
+{% endif %}
 bootstrap.mlockall: true
 network.bind_host: {{ ansible_eth1['ipv4']['address'] }}
 network.publish_host: {{ ansible_eth1['ipv4']['address'] }}

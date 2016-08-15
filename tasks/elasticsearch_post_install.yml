@@ -22,37 +22,14 @@
     mode: 0644
   register: os_elasticsearch_config_hosts
 
-- name: Copy Client Node Configuration File
+- name: Copy elasticsearch.yml to node
   template:
-    src: elasticsearch_client.yml.j2
+    src: elasticsearch.yml.j2
     dest: "{{ elasticsearch_etc_directory }}/elasticsearch.yml"
     owner: "{{ elasticsearch_system_user_name }}"
     group: "{{ elasticsearch_system_group_name }}"
     mode: 0644
     force: yes
-  when: inventory_hostname in groups['elasticsearch_client']
-  notify: Restart elasticsearch services
-
-- name: Copy Master Node Configuration File
-  template:
-    src: elasticsearch_master.yml.j2
-    dest: "{{ elasticsearch_etc_directory }}/elasticsearch.yml"
-    owner: "{{ elasticsearch_system_user_name }}"
-    group: "{{ elasticsearch_system_group_name }}"
-    mode: 0644
-    force: yes
-  when: inventory_hostname in groups['elasticsearch_master']
-  notify: Restart elasticsearch services
-
-- name: Copy Data Node Configuration File
-  template:
-    src: elasticsearch_master.yml.j2
-    dest: "{{ elasticsearch_etc_directory }}/elasticsearch.yml"
-    owner: "{{ elasticsearch_system_user_name }}"
-    group: "{{ elasticsearch_system_group_name }}"
-    mode: 0644
-    force: yes
-  when: inventory_hostname in groups['elasticsearch_data']
   notify: Restart elasticsearch services
 
 - name: Copy /etc/default/ File for Instance
