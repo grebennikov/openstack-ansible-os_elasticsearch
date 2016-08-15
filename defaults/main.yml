@@ -24,13 +24,14 @@ elasticsearch_system_group_name: elasticsearch
 elasticsearch_system_user_name: elasticsearch
 elasticsearch_system_user_comment: Elasticsearch System User
 elasticsearch_system_user_shell: /bin/false
-elasticsearch_system_user_home: "/var/lib/{{ elasticsearch_system_user_name }}"
+elasticsearch_system_user_home: "/usr/share/{{ elasticsearch_system_user_name }}"
 elasticsearch_java_home: /usr/lib/jvm/java-8-oracle
-elasticsearch_data_directory: "/var/lib/{{ elasticsearch_system_user_name }}/data"
+elasticsearch_data_directory: "/usr/share/{{ elasticsearch_system_user_name }}/data"
 elasticsearch_log_directory: /var/log/elasticsearch
 elasticsearch_etc_directory: /usr/share/elasticsearch/config
 elasticsearch_plugin_directory: /usr/share/elasticsearch/plugins
 elasticsearch_bin: /usr/share/elasticsearch/bin/elasticsearch
+elasticsearch_plugin: /usr/share/elasticsearch/bin/plugin
 elasticsearch_pid_directory: /var/run/elasticsearch
 elasticsearch_work_directory: /tmp/elasticsearch
 elasticsearch_heap_size: 2g
@@ -49,3 +50,39 @@ elasticsearch_discovery_minimum_master_nodes: 3
 elasticsearch_pip_packages:
   - elasticsearch
   - elasticsearch-curator
+
+# ---- Plugins ----
+
+#elasticsearch_plugins:
+#  - name: 'com.sksamuel.elasticsearch/elasticsearch-river-redis/1.1.0'
+#
+#elasticsearch_plugins:
+#  - name: 'com.sksamuel.elasticsearch/elasticsearch-river-redis/1.1.0'
+#    delete: True
+#
+#
+# Using a name with url...
+#
+#elasticsearch_plugins:
+#  - name: 'facet-script'
+#    url: 'http://dl.bintray.com/content/imotov/elasticsearch-plugins/elasticsearch-facet-script-1.1.2.zip'
+#
+#
+# Using a name and custom configuration (in this case, cloud-aws)...
+# Just pass a string block to the config key, it works for any plugin.
+#
+#elasticsearch_plugins:
+#  - name: elasticsearch/elasticsearch-cloud-aws/2.3.0
+#    config: |
+#    # cloud-aws configuration
+#      cloud:
+#        aws:
+#          access_key: <your access key>
+#          secret_key: <your secret key>
+#      discovery:
+#        type: ec2
+#      repositories:
+#        bucket: <the bucket created in s3>
+
+# A list of plugins to install or delete.
+elasticsearch_plugins: []

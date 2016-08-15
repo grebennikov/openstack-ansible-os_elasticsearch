@@ -15,6 +15,12 @@
 #
 # (c) 2016 Donovan Francesco <donovan.francesco@is.co.za>
 # (c) 2016 Paul Stevens <paul.stevens@is.co.za>
+- name: Ensure /etc/init.d/elasticsearch is absent
+  file:
+    path: /etc/init.d/elasticsearch
+    state: absent
+    force: yes
+
 - name: Templatize /etc/hosts
   template:
     src: elasticsearch_hosts_file.j2
@@ -48,4 +54,34 @@
     group: "{{ elasticsearch_system_group_name }}"
     mode: 0644
     force: yes
+  notify: Restart elasticsearch services
+
+- name: Detect installed plugins
+  shell: bin/plugin -l chdir={{ elasticsearch_system_user_home }}
+  changed_when: False
+  register: elasticsearch_register_installed_plugins
+
+- name: Delete plugins
+  shell: bin/plugin -s -r {{ item.name }} chdir={{ elasticsearch_system_user_home }}
+  when: item.delete is defined and item.delete and
+        (item.name in elasticsearch_register_installed_plugins.stdout or
+        item.name.split('/')[1] in elasticsearch_register_installed_plugins.stdout)
+  with_items: elasticsearch_plugins
+  notify: Restart elasticsearch services
+
+- name: Install plugins by name
+  shell: bin/plugin -i {{ item.name }} chdir={{ elasticsearch_system_user_home }}
+  when: (item.url is undefined or not item.url) and
+        (item.delete is undefined or not item.delete) and
+        not item.name.split('/')[1] in elasticsearch_register_installed_plugins.stdout
+  with_items: elasticsearch_plugins
+  notify: Restart elasticsearch services
+
+- name: Install plugins by url
+  shell: bin/plugin -i {{ item.name }} -u {{ item.url }}
+         chdir={{ elasticsearch_system_user_home }}
+  when: item.url is defined and item.url and
+        (item.delete is undefined or not item.delete) and
+        not item.name in elasticsearch_register_installed_plugins.stdout
+  with_items: elasticsearch_plugins
   notify: Restart elasticsearch services
