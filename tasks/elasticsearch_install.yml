@@ -29,16 +29,16 @@
     - elasticsearch-install
     - elasticsearch-pip-packages
 
-# - name: Install pip packages
-#   pip:
-#     name: "{{ elasticsearch_pip_packages | join(' ') }}"
-#     state: latest
-#     extra_args: "{{ pip_install_options_fact }}"
-#   register: install_packages
-#   until: install_packages|success
-#   retries: 5
-#   delay: 2
-#   notify: Restart elasticsearch services
-#   tags:
-#     - elasticsearch-install
-#     - elasticsearch-pip-packages
+- name: Install pip packages
+  pip:
+    name: "{{ elasticsearch_pip_packages | join(' ') }}"
+    state: latest
+    extra_args: "{{ pip_install_options_fact }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  notify: Restart elasticsearch services
+  tags:
+    - elasticsearch-install
+    - elasticsearch-pip-packages

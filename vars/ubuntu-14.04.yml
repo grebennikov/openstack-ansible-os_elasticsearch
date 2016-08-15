@@ -22,6 +22,7 @@ cache_timeout: 600
 
 elasticsearch_apt_packages:
   - python-software-properties
+  - python-pip
   - oracle-java8-installer
   - oracle-java8-set-default
   - elasticsearch
