@@ -85,3 +85,24 @@
         not item.name in elasticsearch_register_installed_plugins.stdout
   with_items: elasticsearch_plugins
   notify: Restart elasticsearch services
+
+- name: Restart ElasticSearch before proceeding
+  meta: flush_handlers
+
+- name: Wait for ElasticSearch port
+  wait_for:
+    host: "{{ ansible_ssh_host }}"
+    port: "9200"
+  tags:
+    - elasticsearch-post-install
+
+- name: Setup the ElasticSearch Curator cron job
+  cron:
+    name: "ElasticSearch Curator"
+    minute: 0
+    hour: 0
+    user: "root"
+    job: "/usr/local/bin/curator --host {{ hostvars[inventory_hostname]['container_address'] }} delete indices --older-than {{ elasticsearch_prune_days }} --time-unit 'days' --timestring '%Y.%m.%d' --prefix 'logstash'"
+    cron_file: "elasticsearch_curator"
+  tags:
+- elasticsearch-post-install
