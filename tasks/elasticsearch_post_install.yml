@@ -57,12 +57,12 @@
   notify: Restart elasticsearch services
 
 - name: Detect installed plugins
-  shell: bin/plugin -l chdir={{ elasticsearch_system_user_home }}
+  shell: bin/plugin list chdir={{ elasticsearch_system_user_home }}
   changed_when: False
   register: elasticsearch_register_installed_plugins
 
 - name: Delete plugins
-  shell: bin/plugin -s -r {{ item.name }} chdir={{ elasticsearch_system_user_home }}
+  shell: bin/plugin remove {{ item.name }} chdir={{ elasticsearch_system_user_home }}
   when: item.delete is defined and item.delete and
         (item.name in elasticsearch_register_installed_plugins.stdout or
         item.name.split('/')[1] in elasticsearch_register_installed_plugins.stdout)
@@ -70,7 +70,7 @@
   notify: Restart elasticsearch services
 
 - name: Install plugins by name
-  shell: bin/plugin -i {{ item.name }} chdir={{ elasticsearch_system_user_home }}
+  shell: bin/plugin install {{ item.name }} chdir={{ elasticsearch_system_user_home }}
   when: (item.url is undefined or not item.url) and
         (item.delete is undefined or not item.delete) and
         not item.name.split('/')[1] in elasticsearch_register_installed_plugins.stdout
@@ -78,7 +78,7 @@
   notify: Restart elasticsearch services
 
 - name: Install plugins by url
-  shell: bin/plugin -i {{ item.name }} -u {{ item.url }}
+  shell: bin/plugin install {{ item.name }} -u {{ item.url }}
          chdir={{ elasticsearch_system_user_home }}
   when: item.url is defined and item.url and
         (item.delete is undefined or not item.delete) and
