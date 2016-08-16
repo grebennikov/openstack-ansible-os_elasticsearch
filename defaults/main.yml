@@ -46,7 +46,7 @@ elasticsearch_index_shards: 5
 # Set the number of replicas (additional copies) of an index (1 by default):
 elasticsearch_index_replicas: 1
 
-elasticsearch_discovery_minimum_master_nodes: 3
+elasticsearch_discovery_minimum_master_nodes: 2
 
 elasticsearch_pip_packages:
   - elasticsearch
