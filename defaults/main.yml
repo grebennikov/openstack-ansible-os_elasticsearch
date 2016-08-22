@@ -88,3 +88,5 @@ elasticsearch_pip_packages:
 # A list of plugins to install or delete.
 elasticsearch_plugins:
   - name: 'mobz/elasticsearch-head'
+  - name: 'license'
+  - name: 'watcher'

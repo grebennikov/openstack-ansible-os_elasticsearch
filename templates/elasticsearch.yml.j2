@@ -21,6 +21,7 @@ node.name: {{ inventory_hostname }}
 node.client: true
 node.data: false
 node.master: false
+action.auto_create_index: .watches,.triggered_watches,.watcher-history*
 {% elif inventory_hostname in groups['elasticsearch_data'] %}
 node.client: false
 node.data: true
