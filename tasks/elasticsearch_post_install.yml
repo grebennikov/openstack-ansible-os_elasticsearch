@@ -93,7 +93,7 @@
 - name: Wait for ElasticSearch port
   wait_for:
     host: "{{ ansible_ssh_host }}"
-    port: "9200"
+    port: "{{ elasticsearch_service_port }}"
   tags:
     - elasticsearch-post-install
 
