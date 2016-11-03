@@ -52,6 +52,9 @@ elasticsearch_pip_packages:
   - elasticsearch
   - elasticsearch-curator
 
+# Allow the playbook to re-write /etc/hosts file. Usually openstack-ansible is responsible for it
+elasticsearch_manage_hosts_file: false
+
 # ---- Plugins ----
 
 #elasticsearch_plugins:

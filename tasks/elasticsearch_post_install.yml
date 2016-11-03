@@ -27,7 +27,7 @@
     dest: /etc/hosts
     mode: 0644
   register: os_elasticsearch_config_hosts
-
+  when: elasticsearch_manage_hosts_file | bool
 - name: Copy elasticsearch.yml to node
   template:
     src: elasticsearch.yml.j2
