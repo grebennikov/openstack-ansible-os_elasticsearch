@@ -32,8 +32,8 @@ node.data: false
 node.master: true
 {% endif %}
 bootstrap.mlockall: true
-network.bind_host: {{ ansible_eth1['ipv4']['address'] }}
-network.publish_host: {{ ansible_eth1['ipv4']['address'] }}
+network.bind_host: {{ container_address }}
+network.publish_host: {{ container_address }}
 http.port: {{ elasticsearch_service_port }}
 discovery.zen.ping.multicast.enabled: false
 {% if elasticsearch_discovery_minimum_master_nodes is defined and elasticsearch_discovery_minimum_master_nodes %}
