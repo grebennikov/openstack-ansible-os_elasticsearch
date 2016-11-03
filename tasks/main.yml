@@ -47,10 +47,12 @@
   tags:
     - os-elasticsearch
 
+- include: elasticsearch_init.yml
+  tags:
+    - os-elasticsearch
+
 - include: elasticsearch_post_install.yml
   tags:
     - os-elasticsearch
 
-- include: elasticsearch_init.yml
-  tags:
-    - os-elasticsearch
+
