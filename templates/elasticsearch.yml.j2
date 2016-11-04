@@ -17,15 +17,19 @@
 
 cluster.name: {{ elasticsearch_cluster_name }}
 node.name: {{ inventory_hostname }}
+{% if inventory_hostname in groups['elasticsearch_data'] %}
+node.data: true
+{% else %}
+node.data: false
+{% endif %}
 {% if inventory_hostname in groups['elasticsearch_client'] %}
 node.client: true
-node.data: false
 node.master: false
-action.auto_create_index: .watches,.triggered_watches,.watcher-history*
-{% elif inventory_hostname in groups['elasticsearch_data'] %}
+{% else %}
 node.client: false
-node.data: true
-node.master: false
+node.master: true
+{% endif %}
+action.auto_create_index: .watches,.triggered_watches,.watcher-history*
 {% else %}
 node.client: false
 node.data: false
