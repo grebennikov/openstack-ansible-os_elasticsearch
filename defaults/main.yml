@@ -57,7 +57,7 @@ elasticsearch_manage_hosts_file: false
 
 curator_config: /usr/share/elasticsearch/curator_config.yml
 curator_action: /usr/share/elasticsearch/delete_indices.yml
-curator_regex: '(log|notification)'
+curator_regex: 'logstash'
 # ---- Plugins ----
 
 #elasticsearch_plugins:

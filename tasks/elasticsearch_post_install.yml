@@ -99,7 +99,7 @@
 
 - name: Setup Curator config file
   template:
-    src: curator.yml.j2
+    src: curator_config.yml.j2
     dest: "{{ curator_config }}"
     owner: "{{ elasticsearch_system_user_name }}"
     group: "{{ elasticsearch_system_group_name }}"
