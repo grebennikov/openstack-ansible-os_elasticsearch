@@ -2,7 +2,7 @@
       haproxy_service_name: elasticsearch
       haproxy_backend_nodes: "{{ groups['elasticsearch_client'] | default([]) }}"
       haproxy_ssl: "{{ haproxy_ssl }}"
-      haproxy_port: 9200
+      haproxy_port: "{{ elasticsearch_service_port }}"
       haproxy_balance_type: http
       haproxy_backend_options:
         - "httpchk HEAD /"
