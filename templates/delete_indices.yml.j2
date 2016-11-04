@@ -1,0 +1,23 @@
+---
+actions:
+  1:
+    action: delete_indices
+    description: >-
+      Delete indices older than {{ elasticsearch_prune_days }} days (based on index name).
+    options:
+      ignore_empty_list: True
+      timeout_override:
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: regex
+      value: "^{{ curator_regex }}.*$"
+      exclude:
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: {{ elasticsearch_prune_days }}
+      exclude:
