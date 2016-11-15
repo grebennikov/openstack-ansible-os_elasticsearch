@@ -1,8 +1,23 @@
-# The infra nodes that will be running the elasticsearch services
-elasticsearch-infra_hosts:
+# The nodes that will be running the elasticsearch services wearing master and data roles
+elasticsearch-master_hosts:
   infra1:
     ip: 172.20.236.111
   infra2:
     ip: 172.20.236.112
   infra3:
     ip: 172.20.236.113
+elasticsearch-data_hosts:
+  infra1:
+    ip: 172.20.236.111
+  infra2:
+    ip: 172.20.236.112
+  infra3:
+    ip: 172.20.236.113
+# The nodes acting as smart balancers of the clients requests, not containing any data. Optional.
+elasticsearch-client_hosts:
+  client1:
+    ip: 172.20.236.114
+  client2:
+    ip: 172.20.236.115
+  client3:
+    ip: 172.20.236.116

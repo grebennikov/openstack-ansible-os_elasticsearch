@@ -26,10 +26,10 @@ node.data: false
 node.client: true
 node.master: false
 node.data: false
+action.auto_create_index: .watches,.triggered_watches,.watch_history-* 
 {% endif %}
 {% if inventory_hostname in groups['elasticsearch_master'] %}
 node.master: true
-action.auto_create_index: .watches,.triggered_watches,.watch_history-* 
 {% else %}
 node.master: false
 {% endif %}
