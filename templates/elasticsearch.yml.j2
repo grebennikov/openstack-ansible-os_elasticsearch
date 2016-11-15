@@ -25,15 +25,13 @@ node.data: false
 {% if inventory_hostname in groups['elasticsearch_client'] %}
 node.client: true
 node.master: false
-{% else %}
-node.client: false
-node.master: true
-{% endif %}
-action.auto_create_index: .watches,.triggered_watches,.watcher-history*
-{% else %}
-node.client: false
 node.data: false
+{% endif %}
+{% if inventory_hostname in groups['elasticsearch_master'] %}
 node.master: true
+action.auto_create_index: .watches,.triggered_watches,.watch_history-* 
+{% else %}
+node.master: false
 {% endif %}
 bootstrap.mlockall: true
 network.bind_host: {{ container_address }}
